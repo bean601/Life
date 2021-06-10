@@ -1,0 +1,13 @@
+C:\Users\Jeremy\Google Drive\Development\life\bin\Debug\netcoreapp3.1\life.exe
+C:\Users\Jeremy\Google Drive\Development\life\bin\Debug\netcoreapp3.1\life.deps.json
+C:\Users\Jeremy\Google Drive\Development\life\bin\Debug\netcoreapp3.1\life.runtimeconfig.json
+C:\Users\Jeremy\Google Drive\Development\life\bin\Debug\netcoreapp3.1\life.runtimeconfig.dev.json
+C:\Users\Jeremy\Google Drive\Development\life\bin\Debug\netcoreapp3.1\life.dll
+C:\Users\Jeremy\Google Drive\Development\life\bin\Debug\netcoreapp3.1\life.pdb
+C:\Users\Jeremy\Google Drive\Development\life\obj\Debug\netcoreapp3.1\life.csprojAssemblyReference.cache
+C:\Users\Jeremy\Google Drive\Development\life\obj\Debug\netcoreapp3.1\life.AssemblyInfoInputs.cache
+C:\Users\Jeremy\Google Drive\Development\life\obj\Debug\netcoreapp3.1\life.AssemblyInfo.cs
+C:\Users\Jeremy\Google Drive\Development\life\obj\Debug\netcoreapp3.1\life.csproj.CoreCompileInputs.cache
+C:\Users\Jeremy\Google Drive\Development\life\obj\Debug\netcoreapp3.1\life.dll
+C:\Users\Jeremy\Google Drive\Development\life\obj\Debug\netcoreapp3.1\life.pdb
+C:\Users\Jeremy\Google Drive\Development\life\obj\Debug\netcoreapp3.1\life.genruntimeconfig.cache
