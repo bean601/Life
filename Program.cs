@@ -10,48 +10,30 @@ namespace life
         private static bool[,] _currentGeneration = new bool[_width, _height];
         private static bool[,] _nextGeneration = new bool[_width, _height];
 
-        public class Cell
-        {
-            public bool IsValid { get; set; }
-            public bool IsAlive { get; set; }
-        }
-
         private class Neighborhood
         {
-            public Neighborhood()
-            {
-                NW = new Cell();
-                N = new Cell();
-                NE = new Cell();
-                E = new Cell();
-                SE = new Cell();
-                S = new Cell();
-                SW = new Cell();
-                W = new Cell();
-            }
-
-            public Cell NW { get; set; }
-            public Cell N { get; set; }
-            public Cell NE { get; set; }
-            public Cell E { get; set; }
-            public Cell SE { get; set; }
-            public Cell S { get; set; }
-            public Cell SW { get; set; }
-            public Cell W { get; set; }
+            public bool NW { get; set; }
+            public bool N { get; set; }
+            public bool NE { get; set; }
+            public bool E { get; set; }
+            public bool SE { get; set; }
+            public bool S { get; set; }
+            public bool SW { get; set; }
+            public bool W { get; set; }
 
             public int NumberOfAliveNeighbors
             {
                 get
                 {
                     var aliveCount = 0;
-                    if (NW.IsAlive) { aliveCount++; }
-                    if (N.IsAlive) { aliveCount++; }
-                    if (NE.IsAlive) { aliveCount++; }
-                    if (E.IsAlive) { aliveCount++; }
-                    if (SE.IsAlive) { aliveCount++; }
-                    if (S.IsAlive) { aliveCount++; }
-                    if (SW.IsAlive) { aliveCount++; }
-                    if (W.IsAlive) { aliveCount++; }
+                    if (NW) { aliveCount++; }
+                    if (N) { aliveCount++; }
+                    if (NE) { aliveCount++; }
+                    if (E) { aliveCount++; }
+                    if (SE) { aliveCount++; }
+                    if (S) { aliveCount++; }
+                    if (SW) { aliveCount++; }
+                    if (W) { aliveCount++; }
                     return aliveCount;
                 }
             }
@@ -133,50 +115,42 @@ namespace life
             // nw
             if (row - 1 > 0 && column - 1 > 0 && row - 1 < _currentGeneration.GetLength(1) && column - 1 < _currentGeneration.GetLength(0))
             {
-                neighborhood.NW.IsValid = true;
-                neighborhood.NW.IsAlive = _currentGeneration[column - 1, row - 1];
+                neighborhood.NW = _currentGeneration[column - 1, row - 1];
             }
             // n
             if (row - 1 > 0 && row - 1 < _currentGeneration.GetLength(1) && column < _currentGeneration.GetLength(0))
             {
-                neighborhood.N.IsValid = true;
-                neighborhood.N.IsAlive = _currentGeneration[column, row - 1];
+                neighborhood.N = _currentGeneration[column, row - 1];
             }
             // ne
             if (row - 1 > 0 && row - 1 < _currentGeneration.GetLength(1) && column + 1 < _currentGeneration.GetLength(0))
             {
-                neighborhood.NE.IsValid = true;
-                neighborhood.NE.IsAlive = _currentGeneration[column + 1, row - 1];
+                neighborhood.NE = _currentGeneration[column + 1, row - 1];
             }
             // e
             if (row < _currentGeneration.GetLength(1) && column + 1 < _currentGeneration.GetLength(0))
             {
-                neighborhood.E.IsValid = true;
-                neighborhood.E.IsAlive = _currentGeneration[column + 1, row];
+                neighborhood.E = _currentGeneration[column + 1, row];
             }
             // se
             if (row + 1 < _currentGeneration.GetLength(1) && column + 1 < _currentGeneration.GetLength(0))
             {
-                neighborhood.SE.IsValid = true;
-                neighborhood.SE.IsAlive = _currentGeneration[column + 1, row + 1];
+                neighborhood.SE = _currentGeneration[column + 1, row + 1];
             }
             // s
             if (row + 1 < _currentGeneration.GetLength(1) && column < _currentGeneration.GetLength(0))
             {
-                neighborhood.S.IsValid = true;
-                neighborhood.S.IsAlive = _currentGeneration[column, row + 1];
+                neighborhood.S = _currentGeneration[column, row + 1];
             }
             // sw
             if (column - 1 > 0 && row + 1 < _currentGeneration.GetLength(1) && column - 1 < _currentGeneration.GetLength(0))
             {
-                neighborhood.SW.IsValid = true;
-                neighborhood.SW.IsAlive = _currentGeneration[column - 1, row + 1];
+                neighborhood.SW = _currentGeneration[column - 1, row + 1];
             }
             // w
             if (column - 1 > 0 && row < _currentGeneration.GetLength(1) && column - 1 < _currentGeneration.GetLength(0))
             {
-                neighborhood.W.IsValid = true;
-                neighborhood.W.IsAlive = _currentGeneration[column - 1, row];
+                neighborhood.W = _currentGeneration[column - 1, row];
             }
 
             return neighborhood;
