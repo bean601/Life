@@ -63,6 +63,12 @@ namespace life
             _currentGeneration[9, 11] = true;
             _currentGeneration[9, 12] = true;
 
+            _currentGeneration[26, 2] = true;
+            _currentGeneration[27, 3] = true;
+            _currentGeneration[27, 4] = true;
+            _currentGeneration[26, 4] = true;
+            _currentGeneration[25, 4] = true;
+
             while (true)
             {
                 DoLife();
@@ -85,11 +91,14 @@ namespace life
                     var current = _currentGeneration[column, row];
                     var neighborhood = GetNeighborhood(row, column);
 
-                    _nextGeneration[column, row] = neighborhood.NumberOfAliveNeighbors > (current ? 1 : 2);
+                    _nextGeneration[column, row] =
+                        current ? neighborhood.NumberOfAliveNeighbors == 2 || neighborhood.NumberOfAliveNeighbors == 3
+                        : neighborhood.NumberOfAliveNeighbors == 3;
+                        
                 }
             }
 
-            _currentGeneration = _nextGeneration;
+            _currentGeneration = _nextGeneration; // play god of life and death
             _nextGeneration = new bool[_width, _height];
         }
 
