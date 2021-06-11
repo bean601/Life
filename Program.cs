@@ -76,7 +76,6 @@ namespace life
                     _nextGeneration[column, row] =
                         current ? neighborhood.NumberOfAliveNeighbors == 2 || neighborhood.NumberOfAliveNeighbors == 3
                         : neighborhood.NumberOfAliveNeighbors == 3;
-                        
                 }
             }
 
