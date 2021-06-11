@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-
 namespace life
 {
     public class Program
@@ -9,6 +7,7 @@ namespace life
         private readonly static int _height = Console.WindowHeight;
         private static bool[,] _currentGeneration = new bool[_width, _height];
         private static bool[,] _nextGeneration = new bool[_width, _height];
+        private static int _generationNumber = 1;
 
         private class Neighborhood
         {
@@ -41,11 +40,7 @@ namespace life
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("         ====== LIFE! =======");
-            Console.WriteLine("         Use the arrow keys to move around");
-            Console.WriteLine("         Use the space bar to toggle a live cell");
-            Console.WriteLine("         Press Q to quit and being the simulation");
-            Console.WriteLine("         Press any key now to begin placing live cells");
+            PrintIntroMessage();
 
             Console.ReadLine();
 
@@ -56,8 +51,15 @@ namespace life
                 DoLife();
                 Render();
             }
+        }
 
-            Console.Read();
+        private static void PrintIntroMessage()
+        {
+            Console.WriteLine("         ====== LIFE! =======");
+            Console.WriteLine("         Use the arrow keys to move around");
+            Console.WriteLine("         Use the space bar to toggle a live cell");
+            Console.WriteLine("         Press Q to quit and being the simulation");
+            Console.WriteLine("         Press any key now to begin placing live cells");
         }
 
         private static void SetupCells()
@@ -103,8 +105,11 @@ namespace life
                         Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                         break;
                     default:
-                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);                        
-                        Console.Write(_currentGeneration[Console.CursorLeft, Console.CursorTop] ? '#' : ' ');
+                        if (Console.CursorLeft > 0)
+                        {
+                            Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                            Console.Write(_currentGeneration[Console.CursorLeft, Console.CursorTop] ? '#' : ' ');
+                        }
                         break;
                 }
             }
@@ -128,32 +133,33 @@ namespace life
                         : neighborhood.NumberOfAliveNeighbors == 3;
                 }
             }
-
+    
             _currentGeneration = _nextGeneration; // play god of life and death
+            _generationNumber++;
             _nextGeneration = new bool[_width, _height];
         }
 
         private static void Render()
         {
-            var sw = new Stopwatch();
-            sw.Start();
+          //  var sw = new Stopwatch();
+          //  sw.Start();
 
             for (int row = 0; row < _currentGeneration.GetLength(1); row++)
             {
                 for (int column = 0; column < _currentGeneration.GetLength(0); column++)
                 {
-                    if (!(row == 0 && column < 7))
+                    if (!(row == 0 && column < 15))
                     {
                         Console.SetCursorPosition(column, row);
                         Console.Write(_currentGeneration[column, row] ? '#' : ' ');
                     }
                 }
             }
-            sw.Stop();
+           // sw.Stop();
 
-            var fps = (int)(((double)sw.ElapsedMilliseconds / (double)1000) * 60);
+           // var fps = (int)(((double)sw.ElapsedMilliseconds / (double)1000) * 60);
             Console.SetCursorPosition(0,0); 
-            Console.Write($"FPS:{fps}");
+            Console.Write($"Gen: {_generationNumber}");
         }
 
         private static Neighborhood GetNeighborhood(int row, int column)
@@ -162,44 +168,76 @@ namespace life
 
             // logic
             // nw
-            if (row - 1 > 0 && column - 1 > 0 && row - 1 < _currentGeneration.GetLength(1) && column - 1 < _currentGeneration.GetLength(0))
+            if (row - 1 > 0 && column - 1 > 0 && row - 1 < _height && column - 1 < _width)
             {
                 neighborhood.NW = _currentGeneration[column - 1, row - 1];
             }
+            else
+            {
+                neighborhood.NW = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row - 1 < 0 ? _height - 1 : row - 1];
+            }
             // n
-            if (row - 1 > 0 && row - 1 < _currentGeneration.GetLength(1) && column < _currentGeneration.GetLength(0))
+            if (row - 1 > 0 && row - 1 < _height && column < _width)
             {
                 neighborhood.N = _currentGeneration[column, row - 1];
             }
+            else
+            {
+                neighborhood.N = _currentGeneration[column, row - 1 < 0 ? _height - 1 : row - 1];
+            }
             // ne
-            if (row - 1 > 0 && row - 1 < _currentGeneration.GetLength(1) && column + 1 < _currentGeneration.GetLength(0))
+            if (row - 1 > 0 && row - 1 < _height && column + 1 < _width)
             {
                 neighborhood.NE = _currentGeneration[column + 1, row - 1];
             }
+            else
+            {
+                neighborhood.NE = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row - 1 < 0 ? _height - 1 : row - 1];
+            }
             // e
-            if (row < _currentGeneration.GetLength(1) && column + 1 < _currentGeneration.GetLength(0))
+            if (row < _height && column + 1 < _width)
             {
                 neighborhood.E = _currentGeneration[column + 1, row];
             }
+            else
+            {
+                neighborhood.E = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row];
+            }
             // se
-            if (row + 1 < _currentGeneration.GetLength(1) && column + 1 < _currentGeneration.GetLength(0))
+            if (row + 1 < _height && column + 1 < _width)
             {
                 neighborhood.SE = _currentGeneration[column + 1, row + 1];
             }
+            else
+            {
+                neighborhood.SE = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row + 1 > _height - 1 ? 0 : row + 1];
+            }
             // s
-            if (row + 1 < _currentGeneration.GetLength(1) && column < _currentGeneration.GetLength(0))
+            if (row + 1 < _height && column < _width)
             {
                 neighborhood.S = _currentGeneration[column, row + 1];
             }
+            else
+            {
+                neighborhood.S = _currentGeneration[column, row + 1 > _height - 1 ? 0 : row + 1];
+            }
             // sw
-            if (column - 1 > 0 && row + 1 < _currentGeneration.GetLength(1) && column - 1 < _currentGeneration.GetLength(0))
+            if (column - 1 > 0 && row + 1 < _height && column - 1 < _width)
             {
                 neighborhood.SW = _currentGeneration[column - 1, row + 1];
             }
+            else
+            {
+                neighborhood.SW = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row + 1 > _height - 1 ? 0 : row + 1];
+            }
             // w
-            if (column - 1 > 0 && row < _currentGeneration.GetLength(1) && column - 1 < _currentGeneration.GetLength(0))
+            if (column - 1 > 0 && row < _height && column - 1 < _width)
             {
                 neighborhood.W = _currentGeneration[column - 1, row];
+            }
+            else
+            {
+                neighborhood.W = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row];
             }
 
             return neighborhood;
