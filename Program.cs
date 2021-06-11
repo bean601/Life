@@ -41,15 +41,15 @@ namespace life
 
         public static void Main(string[] args)
         {
-            _currentGeneration[9, 10] = true;
-            _currentGeneration[9, 11] = true;
-            _currentGeneration[9, 12] = true;
+            Console.WriteLine("         ====== LIFE! =======");
+            Console.WriteLine("         Use the arrow keys to move around");
+            Console.WriteLine("         Use the space bar to toggle a live cell");
+            Console.WriteLine("         Press Q to quit and being the simulation");
+            Console.WriteLine("         Press any key now to begin placing live cells");
 
-            _currentGeneration[26, 2] = true;
-            _currentGeneration[27, 3] = true;
-            _currentGeneration[27, 4] = true;
-            _currentGeneration[26, 4] = true;
-            _currentGeneration[25, 4] = true;
+            Console.ReadLine();
+
+            SetupCells();
 
             while (true)
             {
@@ -58,6 +58,56 @@ namespace life
             }
 
             Console.Read();
+        }
+
+        private static void SetupCells()
+        {
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            var keyPressed = Console.ReadKey();
+
+            while (keyPressed.Key != ConsoleKey.Q)
+            {
+                keyPressed = Console.ReadKey();
+
+                switch (keyPressed.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        if (Console.CursorTop > 1)
+                        {
+                            Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
+                        }
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (Console.CursorTop < 29)
+                        {
+                            Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop + 1);
+                        }
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        if (Console.CursorLeft > 1)
+                        {
+                            Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                        }
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if (Console.CursorLeft < 119)
+                        {
+                            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+                        }
+                        break;
+                    case ConsoleKey.Spacebar:
+                        Console.CursorLeft = Console.CursorLeft - 1;
+                        _currentGeneration[Console.CursorLeft, Console.CursorTop] = !_currentGeneration[Console.CursorLeft, Console.CursorTop];
+                        Console.Write(_currentGeneration[Console.CursorLeft, Console.CursorTop] ? '#' : ' ');
+                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                        break;
+                    default:
+                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);                        
+                        Console.Write(_currentGeneration[Console.CursorLeft, Console.CursorTop] ? '#' : ' ');
+                        break;
+                }
+            }
         }
 
         private static void DoLife()
