@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 namespace life
 {
     public class Program
@@ -134,32 +136,36 @@ namespace life
                 }
             }
     
-            _currentGeneration = _nextGeneration; // play god of life and death
-            _generationNumber++;
-            _nextGeneration = new bool[_width, _height];
+            _generationNumber++;            
         }
 
         private static void Render()
         {
-          //  var sw = new Stopwatch();
-          //  sw.Start();
+            var sw = new Stopwatch();
+            sw.Start();
 
-            for (int row = 0; row < _currentGeneration.GetLength(1); row++)
+            for (int row = 0; row < _nextGeneration.GetLength(1); row++)
             {
-                for (int column = 0; column < _currentGeneration.GetLength(0); column++)
+                for (int column = 0; column < _nextGeneration.GetLength(0); column++)
                 {
                     if (!(row == 0 && column < 15))
                     {
-                        Console.SetCursorPosition(column, row);
-                        Console.Write(_currentGeneration[column, row] ? '#' : ' ');
+                        if (_nextGeneration[column, row] != _currentGeneration[column, row])
+                        {
+                            Console.SetCursorPosition(column, row);
+                            Console.Write(_nextGeneration[column, row] ? '#' : ' ');
+                        }
                     }
                 }
-            }
-           // sw.Stop();
+            } 
+            sw.Stop();
 
            // var fps = (int)(((double)sw.ElapsedMilliseconds / (double)1000) * 60);
             Console.SetCursorPosition(0,0); 
-            Console.Write($"Gen: {_generationNumber}");
+            Console.Write($"{sw.ElapsedMilliseconds} Gen: {_generationNumber}");
+
+            _currentGeneration = _nextGeneration;
+            _nextGeneration = new bool[_width, _height];
         }
 
         private static Neighborhood GetNeighborhood(int row, int column)
