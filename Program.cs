@@ -172,80 +172,15 @@ namespace life
         {
             var neighborhood = new Neighborhood();
 
-            // logic
-            // nw
-            if (row - 1 > 0 && column - 1 > 0 && row - 1 < _height && column - 1 < _width)
-            {
-                neighborhood.NW = _currentGeneration[column - 1, row - 1];
-            }
-            else
-            {
-                neighborhood.NW = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row - 1 < 0 ? _height - 1 : row - 1];
-            }
-            // n
-            if (row - 1 > 0 && row - 1 < _height && column < _width)
-            {
-                neighborhood.N = _currentGeneration[column, row - 1];
-            }
-            else
-            {
-                neighborhood.N = _currentGeneration[column, row - 1 < 0 ? _height - 1 : row - 1];
-            }
-            // ne
-            if (row - 1 > 0 && row - 1 < _height && column + 1 < _width)
-            {
-                neighborhood.NE = _currentGeneration[column + 1, row - 1];
-            }
-            else
-            {
-                neighborhood.NE = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row - 1 < 0 ? _height - 1 : row - 1];
-            }
-            // e
-            if (row < _height && column + 1 < _width)
-            {
-                neighborhood.E = _currentGeneration[column + 1, row];
-            }
-            else
-            {
-                neighborhood.E = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row];
-            }
-            // se
-            if (row + 1 < _height && column + 1 < _width)
-            {
-                neighborhood.SE = _currentGeneration[column + 1, row + 1];
-            }
-            else
-            {
-                neighborhood.SE = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row + 1 > _height - 1 ? 0 : row + 1];
-            }
-            // s
-            if (row + 1 < _height && column < _width)
-            {
-                neighborhood.S = _currentGeneration[column, row + 1];
-            }
-            else
-            {
-                neighborhood.S = _currentGeneration[column, row + 1 > _height - 1 ? 0 : row + 1];
-            }
-            // sw
-            if (column - 1 > 0 && row + 1 < _height && column - 1 < _width)
-            {
-                neighborhood.SW = _currentGeneration[column - 1, row + 1];
-            }
-            else
-            {
-                neighborhood.SW = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row + 1 > _height - 1 ? 0 : row + 1];
-            }
-            // w
-            if (column - 1 > 0 && row < _height && column - 1 < _width)
-            {
-                neighborhood.W = _currentGeneration[column - 1, row];
-            }
-            else
-            {
-                neighborhood.W = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row];
-            }
-
+            neighborhood.NW = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row - 1 < 0 ? _height - 1 : row - 1];
+            neighborhood.N = _currentGeneration[column, row - 1 < 0 ? _height - 1 : row - 1];
+            neighborhood.NE = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row - 1 < 0 ? _height - 1 : row - 1];
+            neighborhood.E = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row];
+            neighborhood.SE = _currentGeneration[column + 1 > _width - 1 ? 0 : column + 1, row + 1 > _height - 1 ? 0 : row + 1];
+            neighborhood.S = _currentGeneration[column, row + 1 > _height - 1 ? 0 : row + 1];
+            neighborhood.SW = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row + 1 > _height - 1 ? 0 : row + 1];
+            neighborhood.W = _currentGeneration[column - 1 < 0 ? _width - 1 : column - 1, row];
+  
             return neighborhood;
         }
     }
